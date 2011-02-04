@@ -14,7 +14,7 @@ class refinerycms {
     provider => gem
   }
 
-  exec { "sudo refinerycms .":
+  exec { "sudo refinerycms . --force":
     cwd     => "/vagrant",
     user    => "root",
     unless  => "test -f /vagrant/Gemfile",
@@ -28,5 +28,10 @@ class refinerycms {
                 Package["imagemagick"],
                 Package["libmagickcore-dev"],
                 Package["libmagickwand-dev"]]
+  }
+
+  upstart::job { "refinerycms":
+    source  => "puppet:///modules/refinerycms/upstart.conf",
+    require => Exec["sudo refinerycms . --force"]
   }
 }
