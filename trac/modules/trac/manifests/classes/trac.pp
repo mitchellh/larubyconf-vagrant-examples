@@ -10,7 +10,7 @@ class trac {
   exec { "setup-trac":
     command => 'echo "\n\n" | sudo trac-admin /vagrant/project initenv',
     unless  => "test -d /vagrant/project",
-    path    => "/echo:/usr/bin:/usr/local/bin",
+    path    => "/bin:/usr/bin:/usr/local/bin",
     require => [Python::Pip_install["trac"],
                 Package["sqlite"],
                 Package["sqlite-dev"]]
